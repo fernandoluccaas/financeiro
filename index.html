@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>Dashboard financeiro</h1>
+        </div>
+        <div class="month-picker">
+          <label for="activeMonth">Mes de analise</label>
+          <input id="activeMonth" type="month" />
+        </div>
+      </header>
+
+      <main>
+        <section class="summary-grid" aria-label="Resumo mensal">
+          <article class="metric saved">
+            <span>Total na conta</span>
+            <strong id="savedTotal">R$ 0,00</strong>
+          </article>
+          <article class="metric income">
+            <span>Entradas</span>
+            <strong id="incomeTotal">R$ 0,00</strong>
+          </article>
+          <article class="metric expense">
+            <span>Gastos do mes</span>
+            <strong id="expenseTotal">R$ 0,00</strong>
+          </article>
+          <article class="metric balance">
+            <span>Saldo previsto</span>
+            <strong id="balanceTotal">R$ 0,00</strong>
+          </article>
+          <article class="metric future">
+            <span>Compromissos futuros</span>
+            <strong id="futureTotal">R$ 0,00</strong>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <aside class="panel controls-panel">
+            <nav class="tabs" aria-label="Cadastros">
+              <button class="tab active" data-tab="income" type="button">Entradas</button>
+              <button class="tab" data-tab="fixed" type="button">Fixas</button>
+              <button class="tab" data-tab="installment" type="button">Parceladas</button>
+              <button class="tab" data-tab="cash" type="button">A vista</button>
+            </nav>
+
+            <form class="form active" id="incomeForm" data-panel="income">
+              <h2>Entradas mensais</h2>
+              <label>
+                Total poupado na conta
+                <input name="savedTotal" type="number" min="0" step="0.01" placeholder="0,00" />
+              </label>
+              <label>
+                Salario
+                <input name="salary" type="number" min="0" step="0.01" placeholder="0,00" />
+              </label>
+              <label>
+                Renda extra
+                <input name="extra" type="number" min="0" step="0.01" placeholder="0,00" />
+              </label>
+              <button type="submit">Salvar entradas</button>
+              <button class="secondary-btn" id="resetIncomeBtn" type="button">Zerar entradas</button>
+            </form>
+
+            <form class="form" id="fixedForm" data-panel="fixed">
+              <h2>Conta fixa</h2>
+              <label>
+                Descricao
+                <input name="name" required placeholder="Condominio, agua, luz..." />
+              </label>
+              <div class="two-cols">
+                <label>
+                  Valor
+                  <input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00" />
+                </label>
+                <label>
+                  Inicio
+                  <input name="startMonth" type="month" required />
+                </label>
+              </div>
+              <button type="submit">Adicionar conta fixa</button>
+            </form>
+
+            <form class="form" id="installmentForm" data-panel="installment">
+              <h2>Compra parcelada</h2>
+              <label>
+                Descricao
+                <input name="name" required placeholder="Celular, moveis, viagem..." />
+              </label>
+              <div class="two-cols">
+                <label>
+                  Valor total
+                  <input name="total" type="number" min="0.01" step="0.01" required placeholder="0,00" />
+                </label>
+                <label>
+                  Parcelas
+                  <input name="installments" type="number" min="1" max="120" step="1" required placeholder="10" />
+                </label>
+              </div>
+              <label>
+                Primeira parcela
+                <input name="startMonth" type="month" required />
+              </label>
+              <button type="submit">Adicionar compra parcelada</button>
+            </form>
+
+            <form class="form" id="cashForm" data-panel="cash">
+              <h2>Compra a vista</h2>
+              <label>
+                Descricao
+                <input name="name" required placeholder="Mercado, farmacia, presente..." />
+              </label>
+              <div class="two-cols">
+                <label>
+                  Valor
+                  <input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00" />
+                </label>
+                <label>
+                  Mes
+                  <input name="month" type="month" required />
+                </label>
+              </div>
+              <button type="submit">Adicionar compra a vista</button>
+            </form>
+          </aside>
+
+          <section class="content-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Mes selecionado</p>
+                  <h2>Gastos por categoria</h2>
+                </div>
+              </div>
+              <div class="breakdown" id="breakdown"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Lancamentos</p>
+                  <h2>Itens do mes</h2>
+                </div>
+              </div>
+              <div class="list" id="monthItems"></div>
+            </article>
+
+            <article class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Projecao</p>
+                  <h2>Gastos ja previstos para meses futuros</h2>
+                </div>
+              </div>
+              <div class="future-list" id="futureMonths"></div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
